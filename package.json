@@ -1,0 +1,11 @@
+{
+  "name": "dhanush-portfolio",
+  "version": "1.0.0",
+  "description": "Professional Portfolio of Dhanush Kumar M",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 3000 -o"
+  },
+  "author": "Dhanush Kumar M",
+  "license": "ISC"
+}
