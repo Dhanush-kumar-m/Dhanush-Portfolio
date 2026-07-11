@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initParticleBackground();
     initScrollReveal();
     initSmoothScroll();
+    initReadmeModal();
 });
+
 
 /* =====================================================
    TYPEWRITER EFFECT
@@ -2199,3 +2201,77 @@ if (contactForm) {
         }, 1200);
     });
 }
+
+/* =====================================================
+   README MODAL INTERACTIVITY
+===================================================== */
+function initReadmeModal() {
+    const modal = document.getElementById("readmeModal");
+    const closeBtn = document.getElementById("closeReadmeModal");
+    const modalBody = document.getElementById("modalBody");
+    const modalTitle = document.getElementById("modalTitle");
+    
+    // Use event delegation to handle clicks on any .readme-link
+    document.addEventListener("click", async (e) => {
+        const link = e.target.closest(".readme-link");
+        if (!link) return;
+        
+        e.preventDefault();
+        const project = link.getAttribute("data-project");
+        const projectCard = link.closest(".project-card");
+        const projectTitle = projectCard ? projectCard.querySelector("h3").textContent : "Project Documentation";
+        
+        if (!modal || !closeBtn || !modalBody || !modalTitle) return;
+        
+        modalTitle.textContent = `${projectTitle} - Documentation`;
+        modalBody.innerHTML = `<div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i><p style="margin-top: 15px; color: var(--text-secondary);">Loading readme content...</p></div>`;
+        
+        modal.style.display = "block";
+        setTimeout(() => {
+            modal.classList.add("active");
+        }, 10);
+
+        try {
+            const response = await fetch(`readmes/${project}.md`);
+            if (!response.ok) throw new Error("Failed to load README");
+            const markdown = await response.text();
+            
+            // Parse markdown to HTML using marked.js
+            if (typeof marked !== "undefined" && marked.parse) {
+                modalBody.innerHTML = marked.parse(markdown);
+            } else {
+                // Fallback to simple formatting if marked is not loaded
+                modalBody.innerHTML = `<pre style="white-space: pre-wrap; font-family: monospace;">${markdown}</pre>`;
+            }
+        } catch (error) {
+            console.error(error);
+            const githubLink = projectCard ? projectCard.querySelector(".project-links a").href : "https://github.com/Dhanush-kumar-m";
+            modalBody.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Error: Could not load the readme content. Please view it directly on <a href="${githubLink}" target="_blank" style="color: var(--primary); text-decoration: underline;">GitHub</a>.</p>`;
+        }
+    });
+
+    const closeModal = () => {
+        if (!modal) return;
+        modal.classList.remove("active");
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 300);
+    };
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+    
+    window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal && modal.classList.contains("active")) {
+            closeModal();
+        }
+    });
+}
+
