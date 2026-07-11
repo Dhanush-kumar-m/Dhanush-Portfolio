@@ -2126,12 +2126,92 @@ footer {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
+/* Responsive Media Queries */
 @media (max-width: 768px) {
     .modal-content {
-        margin: 15% auto;
-        padding: 20px;
-        width: 95%;
+        margin: 10% auto;
+        padding: 24px;
+        width: 92%;
         max-height: 80vh;
     }
 }
+
+@media (max-width: 480px) {
+    /* Premium Grid layout for project card links on mobile to prevent wrapping/overflow */
+    .project-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding-top: 15px;
+    }
+    
+    .project-links a {
+        background: rgba(99, 102, 241, 0.05);
+        border: 1px solid var(--border-color);
+        padding: 10px 8px;
+        border-radius: var(--radius-md);
+        justify-content: center;
+        font-size: 0.85rem;
+    }
+    
+    .project-links a:hover {
+        background: rgba(99, 102, 241, 0.1);
+    }
+    
+    /* Pull demo link to span full width below Code and README */
+    .project-links a.demo-link {
+        grid-column: span 2;
+        margin-left: 0;
+        background: var(--primary-gradient);
+        color: white !important;
+        border: none;
+    }
+
+    .project-links a.demo-link:hover {
+        opacity: 0.9;
+    }
+    
+    /* Maximize readability and spacing inside README modal on small screens */
+    .modal-content {
+        margin: 3% auto;
+        padding: 18px 15px;
+        width: 96%;
+        max-height: 94vh;
+        border-radius: var(--radius-md);
+    }
+    
+    .modal-header {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.15rem;
+    }
+    
+    .modal-body h1 {
+        font-size: 1.4rem;
+        margin-top: 15px;
+    }
+    
+    .modal-body h2 {
+        font-size: 1.2rem;
+        margin-top: 20px;
+    }
+    
+    .modal-body h3 {
+        font-size: 1.05rem;
+    }
+    
+    .modal-body p, .modal-body li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    .modal-body pre {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+}
+
 
