@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initThemeManager();
     initChatbot();
     initMobileNav();
-    initCustomCursor();
+    // initCustomCursor();
     initMouseGlow();
     initParticleBackground();
     initScrollReveal();
