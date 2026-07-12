@@ -2161,11 +2161,14 @@ footer {
     
     /* Pull demo link to span full width below Code and README */
     .project-links a.demo-link {
-        grid-column: span 2;
         margin-left: 0;
         background: var(--primary-gradient);
         color: white !important;
         border: none;
+    }
+    
+    .project-links a.demo-link:nth-child(3) {
+        grid-column: span 2;
     }
 
     .project-links a.demo-link:hover {
